@@ -4,6 +4,14 @@
 
 class PIDControl {
 public:
+  PIDControl() = default;
+
+  PIDControl(int64_t k_p, int64_t k_i, int64_t k_d, int64_t integral_min,
+             int64_t integral_max, int64_t output_min, int64_t output_max)
+      : k_p_{k_p}, k_i_{k_i}, k_d_{k_d}, integral_min_{integral_min},
+        integral_max_{integral_max}, output_min_{output_min},
+        output_max_{output_max} {}
+
   auto compute(int64_t setpoint, int64_t measured_value, int64_t dt) -> int64_t;
 
 private:

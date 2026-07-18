@@ -27,5 +27,25 @@ option(BUILD_TESTS "Build unit tests" ON)
 
 if(BUILD_TESTS)
   enable_testing()
-  add_subdirectory(tests)
+
+  include(FetchContent)
+  FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+  )
+  set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+  FetchContent_MakeAvailable(googletest)
+
+  add_executable(pid_tests
+    tests/pid_test.cpp
+  )
+
+  target_link_libraries(pid_tests PRIVATE
+    pid_lib
+    GTest::gtest_main
+  )
+
+  include(GoogleTest)
+  gtest_discover_tests(pid_tests)
 endif()
