@@ -1,8 +1,6 @@
-#include "pid.hpp"
+#include "pid-control-sim/pid.hpp"
 #include <algorithm>
 #include <cstdint>
-
-PIDControl::PIDControl() {}
 
 auto PIDControl::compute(int64_t setpoint, int64_t measured_value, int64_t dt)
     -> int64_t {
@@ -15,7 +13,7 @@ auto PIDControl::compute(int64_t setpoint, int64_t measured_value, int64_t dt)
   int64_t D{this->compute_derivative_term(measured_value, dt)};
 
   int64_t output{P + I + D};
-  int64_t output = clamp(output, this->output_min_, this->output_max_);
+  output = clamp(output, this->output_min_, this->output_max_);
 
   this->prev_error_ = error;
   this->prev_measurement_ = measured_value;
@@ -23,8 +21,8 @@ auto PIDControl::compute(int64_t setpoint, int64_t measured_value, int64_t dt)
   return output;
 }
 
-static auto PIDControl::clamp(int64_t value, int64_t min_value,
-                              int64_t max_value) -> int64_t {
+[[nodiscard]] auto PIDControl::clamp(int64_t value, int64_t min_value,
+                                     int64_t max_value) -> int64_t {
   return std::max(min_value, std::min(max_value, value));
 }
 
