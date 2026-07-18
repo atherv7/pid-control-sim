@@ -112,7 +112,7 @@ TEST(PIDControl, DerivativeReactsToMeasurementChange) {
   PIDControl pid(
       /*k_p=*/0,
       /*k_i=*/0,
-      /*k_d=*/5,
+      /*k_d=*/2,
       /*integral_min=*/kWideMin,
       /*integral_max=*/kWideMax,
       /*output_min=*/kWideMin,
@@ -173,7 +173,7 @@ TEST(PIDControl, OutputWithinBoundsIsUnclamped) {
       /*output_min=*/-50,
       /*output_max=*/50);
 
-  EXPECT_EQ(pid.compute(/*setpoint=*/10, /*measured_value=*/0, /*dt=*/1), -10);
+  EXPECT_EQ(pid.compute(/*setpoint=*/10, /*measured_value=*/0, /*dt=*/1), 10);
 }
 
 TEST(PIDControl, CombinedTermsAcrossMultipleSteps) {
