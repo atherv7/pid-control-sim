@@ -1,40 +1,38 @@
 #pragma once
 
-#include <cstdint>
-
 class PIDControl {
 public:
   PIDControl() = default;
 
-  PIDControl(int64_t k_p, int64_t k_i, int64_t k_d, int64_t integral_min,
-             int64_t integral_max, int64_t output_min, int64_t output_max)
+  PIDControl(double k_p, double k_i, double k_d, double integral_min,
+             double integral_max, double output_min, double output_max)
       : k_p_{k_p}, k_i_{k_i}, k_d_{k_d}, integral_min_{integral_min},
         integral_max_{integral_max}, output_min_{output_min},
         output_max_{output_max} {}
 
-  auto compute(int64_t setpoint, int64_t measured_value, int64_t dt) -> int64_t;
+  auto compute(double setpoint, double measured_value, double dt) -> double;
 
 private:
-  int64_t k_p_{};
-  int64_t k_i_{};
-  int64_t k_d_{};
+  double k_p_{};
+  double k_i_{};
+  double k_d_{};
 
-  int64_t integral_{};
-  int64_t integral_min_{};
-  int64_t integral_max_{};
+  double integral_{};
+  double integral_min_{};
+  double integral_max_{};
 
-  int64_t output_min_{};
-  int64_t output_max_{};
+  double output_min_{};
+  double output_max_{};
 
-  int64_t prev_measurement_{};
-  int64_t prev_error_{};
+  double prev_measurement_{};
+  double prev_error_{};
 
-  [[nodiscard]] auto clamp(int64_t value, int64_t min_value, int64_t max_value)
-      -> int64_t;
+  [[nodiscard]] auto clamp(double value, double min_value, double max_value)
+      -> double;
 
-  auto compute_proportional_term(int64_t error) -> int64_t;
+  auto compute_proportional_term(double error) -> double;
 
-  auto compute_integral_term(int64_t error, int64_t dt) -> int64_t;
+  auto compute_integral_term(double error, double dt) -> double;
 
-  auto compute_derivative_term(int64_t measured_value, int64_t dt) -> int64_t;
+  auto compute_derivative_term(double measured_value, double dt) -> double;
 };
