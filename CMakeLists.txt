@@ -17,6 +17,7 @@ add_compile_options(-Wall -Wextra -Wpedantic)
 
 add_library(pid_lib STATIC
   src/pid.cpp
+  src/dynamics.cpp
 )
 
 target_include_directories(pid_lib PUBLIC
@@ -39,6 +40,7 @@ if(BUILD_TESTS)
 
   add_executable(pid_tests
     tests/pid_test.cpp
+    tests/dynamics_test.cpp
   )
 
   target_link_libraries(pid_tests PRIVATE
